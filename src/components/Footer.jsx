@@ -1,6 +1,6 @@
 function Footer(){
-  return {
-
-}
+  return (
+    <h1>Навигация</h1>
+  )
 }
 export default Footer;
