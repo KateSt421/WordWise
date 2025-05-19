@@ -1,8 +1,8 @@
-import './App.css'
-import Header from './components/header';
-import Footer from './components/Footer';
-import Content from './components/Content';
-import  { useState } from "react";
+import './App.css';
+import Header from './components/header/Header';
+import Content  from './components/Content';
+import Footer from './components/footer/Footer';
+import { useState } from "react";
 
 const App = () => {
     const [words, setWords] = useState([
@@ -10,13 +10,13 @@ const App = () => {
     ]);
 
     const [isEditing, setIsEditing] = useState(null);
-    const [newWord, setNewWord] = useState("")
+    const [newWord, setNewWord] = useState("");
     const [newTranscription, setNewTranscription] = useState("");
     const [newTranslation, setNewTranslation] = useState("");
     const [newTags, setNewTags] = useState("");
 
     const handleEdit = (id) => {
-        const wordToEdit = words.find(english => english.id === id);
+        const wordToEdit = words.find(word => word.id === id);
         setNewWord(wordToEdit.english);
         setNewTranscription(wordToEdit.transcription);
         setNewTranslation(wordToEdit.russian);
@@ -25,8 +25,8 @@ const App = () => {
     };
 
     const handleSave = (id) => {
-        setWords(words.map(english => 
-            english.id === id ? { ...english, english: newWord, transcription: newTranscription, russian: newTranslation, tags: newTags, } : english
+        setWords(words.map(word => 
+            word.id === id ? { ...word, english: newWord, transcription: newTranscription, russian: newTranslation, tags: newTags } : word
         ));
         setIsEditing(null);
         setNewWord("");
@@ -36,12 +36,19 @@ const App = () => {
     };
 
     const handleDelete = (id) => {
-        setWords(words.filter(english => english.id !== id));
+        setWords(words.filter(word => word.id !== id));
     };
 
-    const handleAddNew = () => {
-        const newId = words.length ? Math.max(words.map(english => english.id)) + 1 : 1;
-        setWords([...words, { id: newId, english: newWord, transcription: newTranscription, russian: newTranslation, tags: newTags }]);
+    const handleAddNewWord = () => {
+        const newId = Date.now().toString(); // Генерация уникального id
+        const newWordObject = {
+            id: newId,
+            english: newWord,
+            transcription: newTranscription,
+            russian: newTranslation,
+            tags: newTags
+        };
+        setWords([...words, newWordObject]);
         setNewWord("");
         setNewTranscription("");
         setNewTranslation("");
@@ -50,20 +57,24 @@ const App = () => {
 
     return (
         <div>
-            <Header/>
-            <table border="1">
+            <Header />
+            <div className="container">
+            <h1>Список английских слов</h1>
+            <table className='table' border="1">
                 <thead>
                     <tr>
+                        <th>№</th> {/* Колонка порядкового номера */}
                         <th>Слово</th>
                         <th>Транскрипция</th>
                         <th>Перевод</th>
-                        <th>Категория</th>
+                        <th>Теги</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {words.map(({ id, english, transcription, russian, tags }) => (
+                    {words.map(({ id, english, transcription, russian, tags }, index) => (
                         <tr key={id}>
+                            <td>{index + 1}</td> {/* Порядковый номер строки */}
                             {isEditing === id ? (
                                 <>
                                     <td>
@@ -128,13 +139,15 @@ const App = () => {
                 onChange={(e) => setNewTranslation(e.target.value)} 
             />
             <input 
-                placeholder="Категория" 
+                placeholder="Теги" 
                 value={newTags} 
                 onChange={(e) => setNewTags(e.target.value)} 
             />
-            <button onClick={handleAddNew}>Добавить</button>
-            <Content/>
-            <Footer/>
+            <button onClick={handleAddNewWord}>Добавить</button>
+            
+            <Content />
+           
+        </div> <Footer />
         </div>
     );
 };
