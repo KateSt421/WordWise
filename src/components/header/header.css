@@ -1,5 +1,5 @@
 .header {
-  background-color: rgb(204, 201, 198);
+  background-color: white;
 }
 
 .container {
@@ -25,9 +25,9 @@
   gap: 30px;
   align-items: center;
   text-decoration: none;
-  color: black;
+  color: rgb(13, 3, 117);
   &:hover {
-    color: white;
+    color: rgb(129, 124, 124);
   }
 }
 
@@ -38,9 +38,9 @@
 
 .link-navy {
   text-decoration: none;
-  color: black;
+  color: rgb(13, 3, 117);
   font-size: 28px;
   &:hover {
-    color: white;
+    color: rgb(129, 124, 124);
   }
 }

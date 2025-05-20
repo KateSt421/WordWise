@@ -3,6 +3,11 @@ import Header from './components/header/Header';
 import Content  from './components/Content';
 import Footer from './components/footer/Footer';
 import { useState } from "react";
+import EditButton from './components/buttons/EditButton';
+import DeleteButton from './components/buttons/DeleteButton';
+import SaveButton from './components/buttons/SaveButton';
+import CanselButton from './components/buttons/CanselButton';
+import AddButton from './components/buttons/AddButton';
 
 const App = () => {
     const [words, setWords] = useState([
@@ -40,7 +45,7 @@ const App = () => {
     };
 
     const handleAddNewWord = () => {
-        const newId = Date.now().toString(); // Генерация уникального id
+        const newId = Date.now().toString();
         const newWordObject = {
             id: newId,
             english: newWord,
@@ -63,7 +68,7 @@ const App = () => {
             <table className='table' border="1">
                 <thead>
                     <tr>
-                        <th>№</th> {/* Колонка порядкового номера */}
+                        <th>№</th>
                         <th>Слово</th>
                         <th>Транскрипция</th>
                         <th>Перевод</th>
@@ -74,7 +79,7 @@ const App = () => {
                 <tbody>
                     {words.map(({ id, english, transcription, russian, tags }, index) => (
                         <tr key={id}>
-                            <td>{index + 1}</td> {/* Порядковый номер строки */}
+                            <td>{index + 1}</td>
                             {isEditing === id ? (
                                 <>
                                     <td>
@@ -102,8 +107,8 @@ const App = () => {
                                         />
                                     </td>
                                     <td>
-                                        <button onClick={() => handleSave(id)}>Сохранить</button>
-                                        <button onClick={() => setIsEditing(null)}>Отмена</button>
+                                        <SaveButton onClick={() => handleSave(id)}/>
+                                        <CanselButton onClick={() => setIsEditing(null)}/>
                                     </td>
                                 </>
                             ) : (
@@ -113,8 +118,8 @@ const App = () => {
                                     <td>{russian}</td>
                                     <td>{tags}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(id)}>Редактировать</button>
-                                        <button onClick={() => handleDelete(id)}>Удалить</button>
+                                        <EditButton onClick={() => handleEdit(id)}/>
+                                        <DeleteButton onClick={() => handleDelete(id)}/>
                                     </td>
                                 </>
                             )}
@@ -143,10 +148,10 @@ const App = () => {
                 value={newTags} 
                 onChange={(e) => setNewTags(e.target.value)} 
             />
-            <button onClick={handleAddNewWord}>Добавить</button>
-            
+            <AddButton onClick={handleAddNewWord}/>
             <Content />
-        </div> <Footer />
+        </div> 
+        <Footer />
         </div>
     );
 };

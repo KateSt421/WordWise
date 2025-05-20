@@ -1,5 +1,5 @@
 import './header.css';
-import logo from './word.avif';
+import logo from './logoW.jpg';
 
 function Header(){
   return ( 
@@ -7,7 +7,7 @@ function Header(){
     <div className="container">
       <div className='header-box'>
         <a className='logo-box' href="#"> 
-            <img className="logo"src={logo} alt="" /><h1 className='logo-title'>WordWise</h1>
+            <img className="logo"src={logo} alt="WordWise" /><h1 className='logo-title'>WordWise</h1>
         </a>
       <div/> 
         <div className='header-navy'>
