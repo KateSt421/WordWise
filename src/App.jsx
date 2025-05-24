@@ -1,3 +1,4 @@
+
 import './App.css';
 import Header from './components/header/Header';
 import Content  from './components/Content';
@@ -7,7 +8,8 @@ import EditButton from './components/buttons/EditButton';
 import DeleteButton from './components/buttons/DeleteButton';
 import SaveButton from './components/buttons/SaveButton';
 import CanselButton from './components/buttons/CanselButton';
-import AddButton from './components/buttons/AddButton';
+import Button from './components/buttons/Button';
+
 
 const App = () => {
     const [words, setWords] = useState([
@@ -60,6 +62,11 @@ const App = () => {
         setNewTags("");
     };
 
+    const addButtonProps = {
+        onClick: handleAddNewWord,
+        nameButton: "Add",
+        typeButton: "add",
+    }
     return (
         <div>
             <Header />
@@ -148,7 +155,9 @@ const App = () => {
                 value={newTags} 
                 onChange={(e) => setNewTags(e.target.value)} 
             />
-            <AddButton onClick={handleAddNewWord}/>
+            {/* <AddButton onClick={handleAddNewWord}/> */}
+            {/* <Button onClick={handleAddNewWord} nameButton={"Add"} typeButton={"add"}/> */}
+            <Button {...addButtonProps} />
             <Content />
         </div> 
         <Footer />
