@@ -4,10 +4,6 @@ import Header from './components/header/Header';
 import Content  from './components/Content';
 import Footer from './components/footer/Footer';
 import { useState } from "react";
-import EditButton from './components/buttons/EditButton';
-import DeleteButton from './components/buttons/DeleteButton';
-import SaveButton from './components/buttons/SaveButton';
-import CanselButton from './components/buttons/CanselButton';
 import Button from './components/buttons/Button';
 
 
@@ -114,8 +110,8 @@ const App = () => {
                                         />
                                     </td>
                                     <td>
-                                        <SaveButton onClick={() => handleSave(id)}/>
-                                        <CanselButton onClick={() => setIsEditing(null)}/>
+                                        <Button onClick={() => handleSave(id)} nameButton={"Save"} typeButton={"save"}/>
+                                        <Button onClick={() => setIsEditing(null)}nameButton={"Cancel"} typeButton={"cancel"}/>
                                     </td>
                                 </>
                             ) : (
@@ -125,8 +121,8 @@ const App = () => {
                                     <td>{russian}</td>
                                     <td>{tags}</td>
                                     <td>
-                                        <EditButton onClick={() => handleEdit(id)}/>
-                                        <DeleteButton onClick={() => handleDelete(id)}/>
+                                        <Button onClick={() => handleEdit(id)} nameButton={"Edit"} typeButton={"edit"}/>
+                                        <Button onClick={() => handleDelete(id)}nameButton={"Delete"} typeButton={"delete"}/>
                                     </td>
                                 </>
                             )}

@@ -12,9 +12,17 @@
 }
 
 .button {
+  color: white;
+  border-radius: 8px;
+  padding: 8px 15px;
+  margin: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(88, 87, 87);
+  }
 }
 
-.button-cansel {
+.button-cancel {
   background-color: rgb(241, 48, 9);
   color: white;
   border-radius: 8px;
