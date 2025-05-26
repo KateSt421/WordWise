@@ -1,5 +1,5 @@
 import styles from './button.module.css';
-const buttonTypes = ["add", "cancel", "delete", "edit", "save"]
+const buttonTypes = ["add", "cancel", "delete", "edit", "save", "show"]
 
 function Button({onClick, nameButton, typeButton}) {
   const className = buttonTypes.includes(typeButton) ?
@@ -7,8 +7,6 @@ function Button({onClick, nameButton, typeButton}) {
   'button'
   return (
     <button className={styles[className] 
-  // ?? styles.button
-
 } onClick={onClick}>{nameButton}</button>
   );
 }

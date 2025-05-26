@@ -73,3 +73,16 @@
     background-color: rgb(88, 87, 87);
   }
 }
+
+.button-show {
+  background-color: rgb(40, 55, 135);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 15px;
+  margin: 5px;
+  border: 1px solid rgb(33, 4, 88);
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(88, 87, 87);
+  }
+}

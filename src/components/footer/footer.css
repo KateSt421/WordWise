@@ -18,3 +18,8 @@
   text-decoration: none;
   color: black;
 }
+
+.footer-navy {
+  display: flex;
+  gap: 20px;
+}
