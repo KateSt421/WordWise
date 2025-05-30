@@ -47,6 +47,7 @@ const WordForm = ({ onAddNewWord }) => {
                 value={newTags} 
                 onChange={(e) => setNewTags(e.target.value)} 
             />
+            
             <Button onClick={handleAddNewWord} nameButton={"Add"} typeButton={"add"}/>
         </div>
     );

@@ -5,6 +5,7 @@ import { useState } from "react";
 import wordsAll from './data';
 import WordForm from './components/wordForm/WordForm';
 import WordList from './components/wordList/WordList';
+import WordSlider from './components/wordSlider/WordSlider';
 
 const App = () => {
     const [words, setWords] = useState(wordsAll);
@@ -25,8 +26,8 @@ const App = () => {
         setWords(words.filter(word => word.id !== id));
     };
 
-    const handleAddNewWord = (newWordObject) => {
-        setWords([...words, newWordObject]);
+    const handleAddNewWord = (newWord) => {
+        setWords([...words, newWord]);
     };
 
     const handleCancel = () => {
@@ -46,6 +47,7 @@ const App = () => {
                     onSave={handleSave} 
                     onCancel={handleCancel} 
                 />
+                <WordSlider words={words} />
                 <WordForm onAddNewWord={handleAddNewWord} />
             </div>
             <Footer />

@@ -48,7 +48,8 @@
   }
 }
 
-.button-edit {
+.button-edit,
+.button-arrow {
   background-color: rgb(170, 102, 233);
   color: white;
   border-radius: 8px;
@@ -59,6 +60,10 @@
   &:hover {
     background-color: rgb(88, 87, 87);
   }
+}
+
+.button-arrow {
+  border-radius: 50%;
 }
 
 .button-save {

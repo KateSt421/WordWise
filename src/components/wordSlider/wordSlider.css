@@ -1,0 +1,11 @@
+.animate {
+  transition: transform 0.5s;
+}
+
+.word-slider {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 20px;
+}
