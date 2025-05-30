@@ -5,28 +5,49 @@ import './wordSlider.css';
 
 const WordSlider = ({ words }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState(null);
+  const [showTranslation, setShowTranslation] = useState(false);
+
+  const changeIndex = (newIndex, dir) => {
+    setIsAnimating(true);
+    setDirection(dir);
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsAnimating(false);
+      setDirection(null);
+      setShowTranslation(false);  // сбрасываем показ перевода при смене карточки
+    }, 500);
+  };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + words.length) % words.length);
+    const newIndex = (currentIndex - 1 + words.length) % words.length;
+    changeIndex(newIndex, 'prev');
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    const newIndex = (currentIndex + 1) % words.length;
+    changeIndex(newIndex, 'next');
+  };
+
+  const handleShowTranslation = () => {
+    setShowTranslation(true);
   };
 
   return (
     <div className="word-slider">
       <Button onClick={handlePrev} nameButton={"←"} typeButton={"arrow"} />
-      {words.length > 1 ? (
+      <div className={`word-card-wrapper ${isAnimating ? 'fade-out' : 'fade-in'} ${direction || ''}`}>
         <WordCard
           word={words[currentIndex]}
-          className={currentIndex !== 0 ? 'animate' : ''}
+          showTranslation={showTranslation}
+          onShowTranslation={handleShowTranslation}
         />
-      ) : (
-        <WordCard word={words[0]} className="animate" />
-      )}
+      </div>
       <Button onClick={handleNext} nameButton={"→"} typeButton={"arrow"} />
     </div>
   );
 };
+
 export default WordSlider;
+
