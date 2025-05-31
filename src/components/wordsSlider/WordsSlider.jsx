@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import WordCard from '../wordCard/WordCard';
 import Button from '../buttons/Button';
-import './wordSlider.css';
+import './wordsSlider.css';
 
 const WordSlider = ({ words }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

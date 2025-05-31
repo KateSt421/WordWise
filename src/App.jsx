@@ -5,7 +5,7 @@ import { useState } from "react";
 import wordsAll from './data';
 import WordForm from './components/wordForm/WordForm';
 import WordList from './components/wordList/WordList';
-import WordSlider from './components/wordSlider/WordSlider';
+import WordsSlider from './components/wordsSlider/WordsSlider';
 
 const App = () => {
     const [words, setWords] = useState(wordsAll);
@@ -47,7 +47,7 @@ const App = () => {
                     onSave={handleSave} 
                     onCancel={handleCancel} 
                 />
-                <WordSlider words={words} />
+                <WordsSlider words={words} />
                 <WordForm onAddNewWord={handleAddNewWord} />
             </div>
             <Footer />
