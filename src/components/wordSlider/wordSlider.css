@@ -28,11 +28,11 @@
 
 /* Можно добавить сдвиги в зависимости от направления */
 .fade-out.next {
-  transform: translateX(-15px) scale(0.95);
+  transform: translateX(-12px) scale(0.95);
 }
 
 .fade-out.prev {
-  transform: translateX(15px) scale(0.95);
+  transform: translateX(12px) scale(0.95);
 }
 
 .fade-in.next {
