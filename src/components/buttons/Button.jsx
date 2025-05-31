@@ -1,5 +1,5 @@
 import styles from './button.module.css';
-const buttonTypes = ["add", "cancel", "delete", "edit", "save", "show"]
+const buttonTypes = ["add", "cancel", "delete", "edit", "save", "show", "arrow"]
 
 function Button({onClick, nameButton, typeButton}) {
   const className = buttonTypes.includes(typeButton) ?

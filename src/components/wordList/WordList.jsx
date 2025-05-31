@@ -29,11 +29,11 @@ const WordList = ({ words, onEdit, onDelete, isEditing, onSave, onCancel }) => (
             ))}
         </tbody>
     </table>
-    <div className="word-list">
+    {/* <div className="word-list">
         {words.map(word => (
             <WordCard key={word.id} word={word} />
         ))}
-    </div>
+    </div> */}
     </section>
 );
 
