@@ -16,7 +16,7 @@ const WordSlider = ({ words }) => {
       setCurrentIndex(newIndex);
       setIsAnimating(false);
       setDirection(null);
-      setShowTranslation(false);  // сбрасываем показ перевода при смене карточки
+      setShowTranslation(false);
     }, 500);
   };
 
