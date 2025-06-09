@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import logo from "./logoW.jpg";
 import "./navBar.css";
 
@@ -6,14 +6,18 @@ function NavBar() {
   return (
     <div>
       <div className="header-box">
-        <a className="logo-box" href="#">
+        <Link className="logo-box" to="/">
           <img className="logo" src={logo} alt="WordWise" />
           <h1 className="logo-title">WordWise</h1>
-        </a>
+        </Link>
         <div />
         <div className="header-navy">
-          <Link to="/">Home</Link>
-          <Link to="/card">Card</Link>
+          <Link className="link-navy" to="/">
+            Home
+          </Link>
+          <Link className="link-navy" to="/card">
+            Card
+          </Link>
         </div>
       </div>
     </div>

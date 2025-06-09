@@ -6,7 +6,8 @@ import wordsAll from "./data";
 import WordForm from "./components/wordForm/WordForm";
 import WordList from "./components/wordList/WordList";
 import WordsSlider from "./components/wordsSlider/WordsSlider";
-import { BrowserRouter as Router, Routes, Route } from "react-router";
+import ErrorPage from "./components/errorPage/ErrorPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
   const [words, setWords] = useState(wordsAll);
@@ -78,6 +79,14 @@ const App = () => {
             element={
               <div className="container">
                 <WordsSlider words={words} />
+              </div>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <div className="container">
+                <ErrorPage />
               </div>
             }
           />

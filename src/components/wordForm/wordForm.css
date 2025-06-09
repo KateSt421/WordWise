@@ -1,3 +1,8 @@
 .add-box {
   margin-bottom: 40px;
 }
+
+.form-box {
+  display: flex;
+  justify-content: center;
+}
