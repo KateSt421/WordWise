@@ -1,0 +1,36 @@
+.header-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+.logo-box {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  text-decoration: none;
+  color: rgb(13, 3, 117);
+  &:hover {
+    color: rgb(129, 124, 124);
+  }
+}
+
+.header-navy {
+  display: inline-flex;
+  gap: 50px;
+}
+
+.link-navy {
+  text-decoration: none;
+  color: rgb(13, 3, 117);
+  font-size: 28px;
+  &:hover {
+    color: rgb(129, 124, 124);
+  }
+}

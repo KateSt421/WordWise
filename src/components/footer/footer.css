@@ -9,16 +9,6 @@
   height: 200px;
 }
 
-.telegram {
-  width: 40px;
-  height: 40px;
-}
-
-.telegram-box {
-  text-decoration: none;
-  color: black;
-}
-
 .footer-navy {
   display: flex;
   gap: 20px;
