@@ -6,7 +6,7 @@ import wordsAll from "./data";
 import WordForm from "./components/wordForm/WordForm";
 import WordList from "./components/wordList/WordList";
 import WordsSlider from "./components/wordsSlider/WordsSlider";
-import ErrorPage from "./components/errorPage/ErrorPage";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -75,7 +75,7 @@ const App = () => {
             }
           />
           <Route
-            path="/card"
+            path="/game"
             element={
               <div className="container">
                 <WordsSlider words={words} />

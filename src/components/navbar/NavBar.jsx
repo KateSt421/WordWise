@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
-import logo from "./logoW.jpg";
+import logo from "./letter_w_alphabet_icon_263122.ico";
 import "./navBar.css";
 
 function NavBar() {
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/game", label: "Card" },
+  ];
+
   return (
     <div>
       <div className="header-box">
@@ -12,12 +17,11 @@ function NavBar() {
         </Link>
         <div />
         <div className="header-navy">
-          <Link className="link-navy" to="/">
-            Home
-          </Link>
-          <Link className="link-navy" to="/card">
-            Card
-          </Link>
+          {navLinks.map((link, index) => (
+            <Link key={index} className="link-navy" to={link.path}>
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </div>

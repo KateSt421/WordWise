@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import WordCard from "../wordCard/WordCard";
 import Button from "../buttons/Button";
 import "./wordsSlider.css";
@@ -7,7 +7,9 @@ const WordSlider = ({ words }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState(null);
-  const [showTranslation, setShowTranslation] = useState(false);
+  const [learnedWordsCount, setLearnedWordsCount] = useState(0);
+  const [shownTranslations, setShownTranslations] = useState({});
+  const wordCardRef = useRef(null);
 
   const changeIndex = (newIndex, dir) => {
     setIsAnimating(true);
@@ -16,7 +18,6 @@ const WordSlider = ({ words }) => {
       setCurrentIndex(newIndex);
       setIsAnimating(false);
       setDirection(null);
-      setShowTranslation(false);
     }, 500);
   };
 
@@ -30,9 +31,26 @@ const WordSlider = ({ words }) => {
     changeIndex(newIndex, "next");
   };
 
-  const handleShowTranslation = () => {
-    setShowTranslation(true);
+  const handleShowTranslation = (wordId) => {
+    if (!shownTranslations[wordId]) {
+      setShownTranslations((prev) => ({
+        ...prev,
+        [wordId]: true,
+      }));
+      setLearnedWordsCount((prev) => prev + 1);
+    }
   };
+
+  useEffect(() => {
+    if (!isAnimating && wordCardRef.current) {
+      const showButton = wordCardRef.current.querySelector(".show-button");
+      if (showButton && !shownTranslations[words[currentIndex]?.id]) {
+        setTimeout(() => {
+          showButton.focus();
+        }, 10);
+      }
+    }
+  }, [currentIndex, isAnimating, shownTranslations, words]);
 
   return (
     <>
@@ -40,17 +58,25 @@ const WordSlider = ({ words }) => {
       <div className="word-slider">
         <Button onClick={handlePrev} nameButton={"←"} typeButton={"arrow"} />
         <div
+          ref={wordCardRef}
           className={`word-card-wrapper ${
             isAnimating ? "fade-out" : "fade-in"
           } ${direction || ""}`}
         >
           <WordCard
             word={words[currentIndex]}
-            showTranslation={showTranslation}
-            onShowTranslation={handleShowTranslation}
+            showTranslation={
+              shownTranslations[words[currentIndex]?.id] || false
+            }
+            onShowTranslation={() =>
+              handleShowTranslation(words[currentIndex]?.id)
+            }
           />
         </div>
         <Button onClick={handleNext} nameButton={"→"} typeButton={"arrow"} />
+      </div>
+      <div className="learned-words-counter">
+        Изучено слов за тренировку: {learnedWordsCount}
       </div>
     </>
   );

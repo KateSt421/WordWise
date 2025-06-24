@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../buttons/Button";
+import Button from "../../components/buttons/Button";
 import error from "./error.jpeg";
 import "./errorPage.css";
 
