@@ -8,6 +8,8 @@ const buttonTypes = [
   "show",
   "arrow",
   "home",
+  "disabled",
+  "primary",
 ];
 
 function Button({ onClick, nameButton, typeButton }) {
