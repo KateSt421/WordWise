@@ -12,14 +12,17 @@ const WordCard = ({
 
   useEffect(() => {
     if (showButtonRef.current && !showTranslation) {
-      showButtonRef.current.focus();
+      const timer = setTimeout(() => {
+        showButtonRef.current.focus();
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [word, showTranslation]);
 
   const handleShowTranslation = () => {
     if (!showTranslation) {
       onShowTranslation();
-      onWordLearned();
+      onWordLearned?.();
     }
   };
 
