@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "../buttons/Button";
-import "./wordForm.css";
 import Modal from "../modal/Modal";
+import { WordContext } from "../../context/WordContext";
+import "./wordForm.css";
 
-const WordForm = ({ onAddNewWord }) => {
+const WordForm = () => {
+  const { addWord } = useContext(WordContext);
   const [newWord, setNewWord] = useState("");
   const [newTranscription, setNewTranscription] = useState("");
   const [newTranslation, setNewTranslation] = useState("");
@@ -45,18 +47,22 @@ const WordForm = ({ onAddNewWord }) => {
     return true;
   };
 
-  const handleAddNewWord = () => {
+  const handleAddNewWord = async () => {
     if (validateFields()) {
-      const newId = Date.now().toString();
-      const newWordObject = {
-        id: newId,
-        english: newWord,
-        transcription: newTranscription,
-        russian: newTranslation,
-        tags: newTags,
-      };
-      onAddNewWord(newWordObject);
-      resetFields();
+      try {
+        await addWord({
+          english: newWord,
+          transcription: newTranscription,
+          russian: newTranslation,
+          tags: newTags,
+        });
+        resetFields();
+      } catch (error) {
+        setErrorMessage(
+          error.message || "Произошла ошибка при добавлении слова"
+        );
+        setShowModal(true);
+      }
     }
   };
 
@@ -112,7 +118,7 @@ const WordForm = ({ onAddNewWord }) => {
         </form>
         <Button
           onClick={handleAddNewWord}
-          nameButton={"Add"}
+          nameButton={"Добавить"}
           typeButton={isFormValid ? "add" : "disabled"}
           disabled={!isFormValid}
         />
