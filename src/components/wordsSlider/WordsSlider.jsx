@@ -1,14 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import WordCard from "../wordCard/WordCard";
 import Button from "../buttons/Button";
+import { WordContext } from "../../context/WordContext";
 import "./wordsSlider.css";
 
-const WordSlider = ({ words }) => {
+const WordSlider = () => {
+  const { words, learnedWords, learnedWordsCount, markWordAsLearned } =
+    useContext(WordContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState(null);
-  const [learnedWordsCount, setLearnedWordsCount] = useState(0);
-  const [shownTranslations, setShownTranslations] = useState({});
   const wordCardRef = useRef(null);
 
   const changeIndex = (newIndex, dir) => {
@@ -32,25 +33,23 @@ const WordSlider = ({ words }) => {
   };
 
   const handleShowTranslation = (wordId) => {
-    if (!shownTranslations[wordId]) {
-      setShownTranslations((prev) => ({
-        ...prev,
-        [wordId]: true,
-      }));
-      setLearnedWordsCount((prev) => prev + 1);
-    }
+    markWordAsLearned(wordId);
   };
 
   useEffect(() => {
     if (!isAnimating && wordCardRef.current) {
       const showButton = wordCardRef.current.querySelector(".show-button");
-      if (showButton && !shownTranslations[words[currentIndex]?.id]) {
+      if (showButton && !learnedWords[words[currentIndex]?.id]) {
         setTimeout(() => {
           showButton.focus();
         }, 10);
       }
     }
-  }, [currentIndex, isAnimating, shownTranslations, words]);
+  }, [currentIndex, isAnimating, learnedWords, words]);
+
+  if (!words.length) {
+    return <div className="no-words">Нет слов для изучения</div>;
+  }
 
   return (
     <>
@@ -65,9 +64,7 @@ const WordSlider = ({ words }) => {
         >
           <WordCard
             word={words[currentIndex]}
-            showTranslation={
-              shownTranslations[words[currentIndex]?.id] || false
-            }
+            showTranslation={learnedWords[words[currentIndex]?.id] || false}
             onShowTranslation={() =>
               handleShowTranslation(words[currentIndex]?.id)
             }

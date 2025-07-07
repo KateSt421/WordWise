@@ -13,7 +13,6 @@ const Word = ({ word, onEdit, onDelete, isEditing, onSave, onCancel }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Используем useCallback для создания стабильной функции
   const validateFields = useCallback(() => {
     const newErrors = {};
     if (!tempWord.trim()) newErrors.word = true;
@@ -41,12 +40,6 @@ const Word = ({ word, onEdit, onDelete, isEditing, onSave, onCancel }) => {
   const handleSave = () => {
     if (validateFields()) {
       onSave(word.id, tempWord, tempTranscription, tempTranslation, tempTags);
-      console.log("Сохранено:", {
-        english: tempWord,
-        transcription: tempTranscription,
-        russian: tempTranslation,
-        tags: tempTags,
-      });
     } else {
       const emptyFields = Object.keys(errors)
         .map((field) => {
@@ -74,7 +67,7 @@ const Word = ({ word, onEdit, onDelete, isEditing, onSave, onCancel }) => {
 
   return (
     <tr>
-      <td>{word.index + 1}</td>
+      <td>{word.id}</td>
       {isEditing === word.id ? (
         <>
           <td>
