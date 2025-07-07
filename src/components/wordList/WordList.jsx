@@ -1,32 +1,35 @@
 import Word from "../word/Word";
 import "./wordList.css";
+import { observer } from "mobx-react-lite";
 
-const WordList = ({ words, onEdit, onDelete, isEditing, onSave, onCancel }) => (
-  <table className="table" border="1">
-    <thead>
-      <tr>
-        <th>№</th>
-        <th>Слово</th>
-        <th>Транскрипция</th>
-        <th>Перевод</th>
-        <th>Теги</th>
-        <th>Действия</th>
-      </tr>
-    </thead>
-    <tbody>
-      {words.map((word, index) => (
-        <Word
-          key={word.id}
-          word={{ ...word, index }}
-          onEdit={onEdit}
-          onDelete={onDelete}
-          isEditing={isEditing}
-          onSave={onSave}
-          onCancel={onCancel}
-        />
-      ))}
-    </tbody>
-  </table>
+const WordList = observer(
+  ({ words, onEdit, onDelete, isEditing, onSave, onCancel }) => (
+    <table className="table" border="1">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Слово</th>
+          <th>Транскрипция</th>
+          <th>Перевод</th>
+          <th>Теги</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {words.map((word, index) => (
+          <Word
+            key={word.id}
+            word={{ ...word, index }}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            isEditing={isEditing}
+            onSave={onSave}
+            onCancel={onCancel}
+          />
+        ))}
+      </tbody>
+    </table>
+  )
 );
 
 export default WordList;

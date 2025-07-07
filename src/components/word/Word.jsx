@@ -13,7 +13,6 @@ const Word = ({ word, onEdit, onDelete, isEditing, onSave, onCancel }) => {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Используем useCallback для создания стабильной функции
   const validateFields = useCallback(() => {
     const newErrors = {};
     if (!tempWord.trim()) newErrors.word = true;

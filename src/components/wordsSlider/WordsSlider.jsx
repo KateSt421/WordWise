@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import WordCard from "../wordCard/WordCard";
 import Button from "../buttons/Button";
 import "./wordsSlider.css";
+import { observer } from "mobx-react-lite";
+import { wordStore } from "../../wordStore/wordStore";
 
-const WordSlider = ({ words }) => {
+const WordSlider = observer(() => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [direction, setDirection] = useState(null);
-  const [learnedWordsCount, setLearnedWordsCount] = useState(0);
-  const [shownTranslations, setShownTranslations] = useState({});
   const wordCardRef = useRef(null);
 
   const changeIndex = (newIndex, dir) => {
@@ -22,39 +22,41 @@ const WordSlider = ({ words }) => {
   };
 
   const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + words.length) % words.length;
+    const newIndex =
+      (currentIndex - 1 + wordStore.words.length) % wordStore.words.length;
     changeIndex(newIndex, "prev");
   };
 
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % words.length;
+    const newIndex = (currentIndex + 1) % wordStore.words.length;
     changeIndex(newIndex, "next");
   };
 
   const handleShowTranslation = (wordId) => {
-    if (!shownTranslations[wordId]) {
-      setShownTranslations((prev) => ({
-        ...prev,
-        [wordId]: true,
-      }));
-      setLearnedWordsCount((prev) => prev + 1);
-    }
+    wordStore.markWordAsLearned(wordId);
   };
 
   useEffect(() => {
     if (!isAnimating && wordCardRef.current) {
       const showButton = wordCardRef.current.querySelector(".show-button");
-      if (showButton && !shownTranslations[words[currentIndex]?.id]) {
+      if (
+        showButton &&
+        !wordStore.learnedWords[wordStore.words[currentIndex]?.id]
+      ) {
         setTimeout(() => {
           showButton.focus();
         }, 10);
       }
     }
-  }, [currentIndex, isAnimating, shownTranslations, words]);
+  }, [currentIndex, isAnimating, wordStore.learnedWords, wordStore.words]);
+
+  if (!wordStore.words.length) {
+    return <div className="no-words">Нет слов для изучения</div>;
+  }
 
   return (
     <>
-      <h1>Карточка слова</h1>
+      <h1>Карточка слов</h1>
       <div className="word-slider">
         <Button onClick={handlePrev} nameButton={"←"} typeButton={"arrow"} />
         <div
@@ -64,22 +66,22 @@ const WordSlider = ({ words }) => {
           } ${direction || ""}`}
         >
           <WordCard
-            word={words[currentIndex]}
+            word={wordStore.words[currentIndex]}
             showTranslation={
-              shownTranslations[words[currentIndex]?.id] || false
+              wordStore.learnedWords[wordStore.words[currentIndex]?.id] || false
             }
             onShowTranslation={() =>
-              handleShowTranslation(words[currentIndex]?.id)
+              handleShowTranslation(wordStore.words[currentIndex]?.id)
             }
           />
         </div>
         <Button onClick={handleNext} nameButton={"→"} typeButton={"arrow"} />
       </div>
       <div className="learned-words-counter">
-        Изучено слов за тренировку: {learnedWordsCount}
+        Изучено слов за тренировку: {wordStore.learnedWordsCount}
       </div>
     </>
   );
-};
+});
 
 export default WordSlider;
