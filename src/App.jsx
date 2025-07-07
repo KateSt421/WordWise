@@ -1,51 +1,37 @@
+import { useState } from "react";
 import "./App.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import { useState } from "react";
-import wordsAll from "./data";
 import WordForm from "./components/wordForm/WordForm";
 import WordList from "./components/wordList/WordList";
 import WordsSlider from "./components/wordsSlider/WordsSlider";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import LoadingSpinner from "./components/loadingSpinner/LoadingSpinner";
+import ErrorNotification from "./components/errorNotification/ErrorNotification";
+import { wordStore } from "./wordStore/wordStore";
 
-const App = () => {
-  const [words, setWords] = useState(wordsAll);
+const App = observer(() => {
   const [isEditing, setIsEditing] = useState(null);
 
   const handleEdit = (id) => {
     setIsEditing(id);
   };
 
-  const handleSave = (
-    id,
-    newWord,
-    newTranscription,
-    newTranslation,
-    newTags
-  ) => {
-    setWords(
-      words.map((word) =>
-        word.id === id
-          ? {
-              ...word,
-              english: newWord,
-              transcription: newTranscription,
-              russian: newTranslation,
-              tags: newTags,
-            }
-          : word
-      )
-    );
-    setIsEditing(null);
+  const handleSave = (id, english, transcription, russian, tags) => {
+    wordStore
+      .updateWord(id, { english, transcription, russian, tags })
+      .then(() => setIsEditing(null))
+      .catch(() => {});
   };
 
   const handleDelete = (id) => {
-    setWords(words.filter((word) => word.id !== id));
+    wordStore.deleteWord(id).catch(() => {});
   };
 
   const handleAddNewWord = (newWord) => {
-    setWords([...words, newWord]);
+    wordStore.addWord(newWord).catch(() => {});
   };
 
   const handleCancel = () => {
@@ -56,21 +42,23 @@ const App = () => {
     <Router>
       <div>
         <Header />
+        <ErrorNotification />
         <Routes>
           <Route
             path="/"
             element={
               <div className="container">
-                <h1>Список английских слов</h1>
+                <WordForm onAddNewWord={handleAddNewWord} />
+                <h2>Список английских слов</h2>
+                <LoadingSpinner />
                 <WordList
-                  words={words}
+                  words={wordStore.words}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                   isEditing={isEditing}
                   onSave={handleSave}
                   onCancel={handleCancel}
                 />
-                <WordForm onAddNewWord={handleAddNewWord} />
               </div>
             }
           />
@@ -78,7 +66,7 @@ const App = () => {
             path="/game"
             element={
               <div className="container">
-                <WordsSlider words={words} />
+                <WordsSlider words={wordStore.words} />
               </div>
             }
           />
@@ -95,6 +83,6 @@ const App = () => {
       </div>
     </Router>
   );
-};
+});
 
 export default App;

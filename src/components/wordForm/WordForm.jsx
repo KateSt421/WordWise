@@ -78,7 +78,7 @@ const WordForm = ({ onAddNewWord }) => {
 
   return (
     <div className="add-box">
-      <h2>Добавить новое слово</h2>
+      <h1>Добавить новое слово</h1>
       <div className="form-box">
         <form>
           <input
